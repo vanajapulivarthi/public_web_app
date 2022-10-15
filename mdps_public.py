@@ -1,10 +1,9 @@
-
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-# loading the saved models
+
 
 diabetes_model = pickle.load(open('diabetes_model.sav', 'rb'))
 
@@ -14,10 +13,9 @@ parkinsons_model = pickle.load(open('parkinsons_model.sav', 'rb'))
 
 
 
-# sidebar for navigation
 with st.sidebar:
     
-    selected = option_menu('Multiple Disease Prediction System',
+    selected = option_menu('Applications of Machine Learning in the field of Medical Care',
                           
                           ['Diabetes Prediction',
                            'Heart Disease Prediction',
@@ -29,48 +27,48 @@ with st.sidebar:
 # Diabetes Prediction Page
 if (selected == 'Diabetes Prediction'):
     
-    # page title
+
     st.title('Diabetes Prediction using ML')
     
     
-    # getting the input data from the user
+
     col1, col2, col3 = st.columns(3)
     
-   
-    Pregnancies = st.text_input('Number of Pregnancies')
+    with col1:
+        Pregnancies = st.text_input('Number of Pregnancies')
         
+    with col2:
+        Glucose = st.text_input('Glucose Level')
     
-    Glucose = st.text_input('Glucose Level')
+    with col3:
+        BloodPressure = st.text_input('Blood Pressure value')
     
-   
-    BloodPressure = st.text_input('Blood Pressure value')
+    with col1:
+        SkinThickness = st.text_input('Skin Thickness value')
     
+    with col2:
+        Insulin = st.text_input('Insulin Level')
     
-    SkinThickness = st.text_input('Skin Thickness value')
+    with col3:
+        BMI = st.text_input('BMI value')
     
+    with col1:
+        DiabetesPedigreeFunction = st.text_input('Diabetes Pedigree Function value')
     
-    Insulin = st.text_input('Insulin Level')
-    
-    
-    BMI = st.text_input('BMI value')
-    
-    
-    DiabetesPedigreeFunction = st.text_input('Diabetes Pedigree Function value')
-    
-    
-    Age = st.text_input('Age of the Person')
+    with col2:
+        Age = st.text_input('Age of the Person')
     
     
-    # code for Prediction
+  
     diab_diagnosis = ''
     
-    # creating a button for Prediction
+  
     
     if st.button('Diabetes Test Result'):
         diab_prediction = diabetes_model.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
         
         if (diab_prediction[0] == 1):
-          diab_diagnosis = 'The person is diabetic'
+          diab_diagnosis = 'The person is not diabetic'
         else:
           diab_diagnosis = 'The person is not diabetic'
         
@@ -82,7 +80,6 @@ if (selected == 'Diabetes Prediction'):
 # Heart Disease Prediction Page
 if (selected == 'Heart Disease Prediction'):
     
-    # page title
     st.title('Heart Disease Prediction using ML')
     
     col1, col2, col3 = st.columns(3)
@@ -129,10 +126,10 @@ if (selected == 'Heart Disease Prediction'):
         
      
      
-    # code for Prediction
+    
     heart_diagnosis = ''
     
-    # creating a button for Prediction
+    
     
     if st.button('Heart Disease Test Result'):
         heart_prediction = heart_disease_model.predict([[age, sex, cp, trestbps, chol, fbs, restecg,thalach,exang,oldpeak,slope,ca,thal]])                          
@@ -147,7 +144,7 @@ if (selected == 'Heart Disease Prediction'):
     
     
 
-# Parkinson's Prediction Page
+
 if (selected == "Parkinsons Prediction"):
     
     # page title
@@ -223,17 +220,16 @@ if (selected == "Parkinsons Prediction"):
         
     
     
-    # code for Prediction
+
     parkinsons_diagnosis = ''
-    
-    # creating a button for Prediction    
+   
     if st.button("Parkinson's Test Result"):
         parkinsons_prediction = parkinsons_model.predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ,DDP,Shimmer,Shimmer_dB,APQ3,APQ5,APQ,DDA,NHR,HNR,RPDE,DFA,spread1,spread2,D2,PPE]])                          
         
         if (parkinsons_prediction[0] == 1):
           parkinsons_diagnosis = "The person has Parkinson's disease"
         else:
-          parkinsons_diagnosis = "The person does not have Parkinson's disease"
+          parkinsons_diagnosis = "The person has Parkinson's disease"
         
     st.success(parkinsons_diagnosis)
 
